@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gamebook.Server.Controllers
+namespace skibidi_gamebook.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]

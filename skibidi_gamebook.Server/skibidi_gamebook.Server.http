@@ -1,0 +1,6 @@
+@skibidi_gamebook.Server_HostAddress = http://localhost:5238
+
+GET {{skibidi_gamebook.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

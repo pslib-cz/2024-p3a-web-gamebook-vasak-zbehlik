@@ -1,4 +1,4 @@
-namespace Gamebook.Server
+namespace skibidi_gamebook.Server
 {
     public class WeatherForecast
     {
