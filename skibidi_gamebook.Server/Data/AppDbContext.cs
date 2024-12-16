@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using skibidi_gamebook.Server.Models;
-using Task = skibidi_gamebook.Server.Models.Task;
 
 namespace skibidi_gamebook.Server.Data
 {
@@ -12,14 +11,13 @@ namespace skibidi_gamebook.Server.Data
         public DbSet<Item> Items { get; set; }
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Achivement> Achivements { get; set; }
-        public DbSet<Task> Tasks { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+  /*      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("YourConnectionStringHere");
-        }
+        }*/
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+ /*       protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Relationships for Connection
             modelBuilder.Entity<Connection>()
@@ -42,6 +40,6 @@ namespace skibidi_gamebook.Server.Data
                 .HasOne(t => t.Requirements)
                 .WithMany(a => a.Tasks)
                 .HasForeignKey(t => t.RequirementsId);
-        }
+        }*/
     }
 }

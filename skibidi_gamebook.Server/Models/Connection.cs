@@ -1,21 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace skibidi_gamebook.Server.Models
 {
     public class Connection
     {
-
-        public int Id { get; set; }
-        public int FromId { get; set; }
-        public int ToId { get; set; }
+        [Key]
+        public int CId { get; set; }
+//        public int FromId { get; set; }
+        public Room Room { get; set; }
+        public int RId { get; set; }        //ToId
         public string Lock { get; set; }
-        public int RequirementsId { get; set; }
+        public Item Item { get; set; }
+        public int IId { get; set; }        //item needed to unlock
 
-        [ForeignKey("FromId")]
-        public Room From { get; set; }
-        [ForeignKey("ToId")]
-        public Room To { get; set; }
-        [ForeignKey("RequirementsId")]
-        public Achivement Requirements { get; set; }
+        public Achivement Achivement { get; set; }
+        public int AId { get; set; }        //achivement needed to unlock
     }
 }
