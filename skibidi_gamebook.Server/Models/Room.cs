@@ -9,7 +9,7 @@ namespace skibidi_gamebook.Server.Models
         public string Name { get; set; }
 //        public int Count { get; set; }
         public string Description { get; set; }
-        public string Img { get; set; }
+        public string? Img { get; set; }
 
 
     }

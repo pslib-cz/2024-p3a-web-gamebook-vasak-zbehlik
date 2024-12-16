@@ -9,10 +9,10 @@ namespace skibidi_gamebook.Server.Models
     {
         [Key]
         public int AId { get; set; } // PK
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Item Item { get; set; }
-        public int IId { get; set; }        //item needed to unlock
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public Item Item { get; set; }     //item needed to unlock
+      
     }
 
 }
