@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using skibidi_gamebook.Server.Data;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,13 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions {
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+    RequestPath = "/Images"
+}   
+);
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

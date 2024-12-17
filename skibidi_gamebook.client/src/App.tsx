@@ -1,8 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import './App.css'; // Optional styling import
 
+
+interface Room {
+  RId: number;
+  Name: string;
+  Description: string;
+  Img?: string;
+}
+interface Connection {
+  CId: number;
+    RoomId: number;
+  Lock: number;
+    ItemId: number;
+    AchievementId: number;
+}
+
+
 const App: React.FC = () => {
-  const [rooms, setRooms] = useState<Room[]>([]);
+    const [rooms, setRooms] = useState<Room[]>([]);
+    const [connections, setConnections] = useState<Connection[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -10,7 +27,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/Locations'); // Replace with your API endpoint
+        const response = await fetch('http://localhost:7160/api/Rooms'); // Replace with your API endpoint
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
