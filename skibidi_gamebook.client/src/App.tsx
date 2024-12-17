@@ -27,11 +27,11 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await fetch('http://localhost:7160/api/Rooms'); // Replace with your API endpoint
+        const response = await fetch('https://localhost:7160/api/Rooms'); // Replace with your API endpoint
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
-        const data: Location[] = await response.json();
+        const data: Room[] = await response.json();
         setRooms(data);
       } catch (err: unknown) {
         setError((err as Error).message || 'Something went wrong.');
@@ -47,6 +47,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <h1>Room List</h1>
+      <img src="https://localhost:7160/Images/plovoucka-rub.jpg" alt="" />
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {!loading && !error && (
