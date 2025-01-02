@@ -11,7 +11,7 @@ namespace skibidi_gamebook.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Connections_Achivements_AchivementAId",
+                name: "FK_Connections_Achivements_AchivementId",
                 table: "Connections");
 
             migrationBuilder.DropForeignKey(
@@ -55,7 +55,7 @@ namespace skibidi_gamebook.Server.Migrations
                 oldType: "INTEGER");
 
             migrationBuilder.AlterColumn<int>(
-                name: "AchivementAId",
+                name: "AchivementId",
                 table: "Connections",
                 type: "INTEGER",
                 nullable: true,
@@ -79,9 +79,9 @@ namespace skibidi_gamebook.Server.Migrations
                 oldType: "TEXT");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Connections_Achivements_AchivementAId",
+                name: "FK_Connections_Achivements_AchivementId",
                 table: "Connections",
-                column: "AchivementAId",
+                column: "AchivementId",
                 principalTable: "Achivements",
                 principalColumn: "AId");
 
@@ -97,7 +97,7 @@ namespace skibidi_gamebook.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Connections_Achivements_AchivementAId",
+                name: "FK_Connections_Achivements_AchivementId",
                 table: "Connections");
 
             migrationBuilder.DropForeignKey(
@@ -143,7 +143,7 @@ namespace skibidi_gamebook.Server.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
-                name: "AchivementAId",
+                name: "AchivementId",
                 table: "Connections",
                 type: "INTEGER",
                 nullable: false,
@@ -180,9 +180,9 @@ namespace skibidi_gamebook.Server.Migrations
                 defaultValue: 0);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Connections_Achivements_AchivementAId",
+                name: "FK_Connections_Achivements_AchivementId",
                 table: "Connections",
-                column: "AchivementAId",
+                column: "AchivementId",
                 principalTable: "Achivements",
                 principalColumn: "AId",
                 onDelete: ReferentialAction.Cascade);

@@ -52,7 +52,7 @@ namespace skibidi_gamebook.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AchivementAId")
+                    b.Property<int>("AchivementId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ItemIId")
@@ -67,7 +67,7 @@ namespace skibidi_gamebook.Server.Migrations
 
                     b.HasKey("CId");
 
-                    b.HasIndex("AchivementAId");
+                    b.HasIndex("AchivementId");
 
                     b.HasIndex("ItemIId");
 
@@ -140,7 +140,7 @@ namespace skibidi_gamebook.Server.Migrations
                 {
                     b.HasOne("skibidi_gamebook.Server.Models.Achivement", "Achivement")
                         .WithMany()
-                        .HasForeignKey("AchivementAId")
+                        .HasForeignKey("AchivementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -113,6 +113,40 @@ namespace skibidi_gamebook.Server.Migrations
 
                     b.ToTable("Rooms");
                 });
+
+            modelBuilder.Entity("skibidi_gamebook.Server.Models.Achivement", b =>
+                {
+                    b.HasOne("skibidi_gamebook.Server.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemIId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("skibidi_gamebook.Server.Models.Connection", b =>
+                {
+                    b.HasOne("skibidi_gamebook.Server.Models.Achivement", "Achivement")
+                        .WithMany()
+                        .HasForeignKey("AchivementAId");
+
+                    b.HasOne("skibidi_gamebook.Server.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemIId");
+
+                    b.HasOne("skibidi_gamebook.Server.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomRId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Achivement");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Room");
+                });
 #pragma warning restore 612, 618
         }
     }
