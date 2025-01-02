@@ -11,7 +11,7 @@ namespace skibidi_gamebook.Server.Models
         public int AId { get; set; } // PK
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public Item Item { get; set; }     //item needed to unlock
+        public int ItemId { get; set; }     //item needed to unlock
       
     }
 

@@ -1,67 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import './App.css'; // Optional styling import
-
+// App.tsx
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import ConnectionChanger from './Components/ConnectionChanger';
+//import RoomDisplay from './Components/RoomDisplay';
 
 interface Room {
-  RId: number;
-  Name: string;
-  Description: string;
-  Img?: string;
-}
-interface Connection {
-  CId: number;
-    RoomId: number;
-  Lock: number;
-    ItemId: number;
-    AchievementId: number;
+  rId: number;
+  name: string;
+  description: string;
+  img?: string;
 }
 
+interface Connection {
+  cId: number;
+  fromId: number;
+  roomId: number;
+  name: string;
+  lock: number;
+  itemId?: number;
+  achievementId?: number;
+}
 
 const App: React.FC = () => {
-    const [rooms, setRooms] = useState<Room[]>([]);
-    const [connections, setConnections] = useState<Connection[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [room, setRoom] = useState<Room | null>(null);
+  const [connections, setConnections] = useState<Connection[]>([]);
+  const [roomId, setRoomId] = useState<number>(1);
 
-  // Fetch data from the API
   useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const response = await fetch('https://localhost:7160/api/Rooms'); // Replace with your API endpoint
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    (async () => {
+        try {
+            const response = await fetch(`https://localhost:7160/api/Rooms/${roomId}`);
+            const jsonData = await response.json();
+            console.log(jsonData);
+            setRoom(jsonData);
+           const response2 = await fetch(`https://localhost:7160/api/Connections/`);
+            const jsonData2 = await response2.json();
+            console.log(jsonData2);
+            setConnections(jsonData2);
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
-        const data: Room[] = await response.json();
-        setRooms(data);
-      } catch (err: unknown) {
-        setError((err as Error).message || 'Something went wrong.');
-      } finally {
-        setLoading(false);
-      }
-    };
+    })();
+  }, [roomId]);
 
-    fetchRooms();
-  }, []);
+  const filteredConnections = connections.filter((connection) => connection.fromId === roomId);
 
-  // Render the component
   return (
     <div className="App">
       <h1>Room List</h1>
-      <img src="https://localhost:7160/Images/plovoucka-rub.jpg" alt="" />
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {!loading && !error && (
-        <ul>
-          {rooms.map((room) => (
-            <li key={room.RId}>
-              <h2>{room.Name}</h2>
-              <p>{room.Description}</p>
-              {room.Img && <img src={room.Img} alt={room.Name} style={{ width: '200px' }} />}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+      <img src={`https://localhost:7160/Images/${room ? room.img : "x"}`} alt="" />
+      {filteredConnections.map((connection) => (
+        <ConnectionChanger
+          key={connection.cId}
+          onChangeRoom={(newRoomId: number) => setRoomId(newRoomId)}
+          targetRoomId={connection.roomId}
+        />
+      ))}</div>
   );
 };
 

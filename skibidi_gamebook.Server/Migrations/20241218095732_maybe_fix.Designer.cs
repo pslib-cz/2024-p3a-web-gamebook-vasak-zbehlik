@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using skibidi_gamebook.Server.Data;
 
@@ -10,9 +11,11 @@ using skibidi_gamebook.Server.Data;
 namespace skibidi_gamebook.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241218095732_maybe_fix")]
+    partial class maybe_fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
@@ -26,13 +29,15 @@ namespace skibidi_gamebook.Server.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ItemId")
+                    b.Property<int>("ItemIId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.HasKey("AId");
+
+                    b.HasIndex("ItemIId");
 
                     b.ToTable("Achivements");
                 });
@@ -46,18 +51,11 @@ namespace skibidi_gamebook.Server.Migrations
                     b.Property<int?>("AchivementId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("FromId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("ItemId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Lock")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("INTEGER");
@@ -112,6 +110,17 @@ namespace skibidi_gamebook.Server.Migrations
                     b.HasKey("RId");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("skibidi_gamebook.Server.Models.Achivement", b =>
+                {
+                    b.HasOne("skibidi_gamebook.Server.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemIId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
                 });
 #pragma warning restore 612, 618
         }
