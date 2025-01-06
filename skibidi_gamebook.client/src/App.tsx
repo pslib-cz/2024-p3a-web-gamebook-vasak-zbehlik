@@ -33,7 +33,7 @@ const App: React.FC = () => {
             const jsonData = await response.json();
             console.log(jsonData);
             setRoom(jsonData);
-           const response2 = await fetch(`https://localhost:7160/api/Connections/`);
+           const response2 = await fetch(`https://localhost:7160/api/Connections/From/${roomId}`);
             const jsonData2 = await response2.json();
             console.log(jsonData2);
             setConnections(jsonData2);
@@ -43,13 +43,12 @@ const App: React.FC = () => {
     })();
   }, [roomId]);
 
-  const filteredConnections = connections.filter((connection) => connection.fromId === roomId);
 
   return (
     <div className="App">
       <h1>Room List</h1>
       <img src={`https://localhost:7160/Images/${room ? room.img : "x"}`} alt="" />
-      {filteredConnections.map((connection) => (
+      {connections.map((connection) => (
         <ConnectionChanger
           key={connection.cId}
           onChangeRoom={(newRoomId: number) => setRoomId(newRoomId)}

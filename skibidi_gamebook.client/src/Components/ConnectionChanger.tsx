@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 interface Connection {
   CId: number;
+  fromId: number;
   RoomId: number;
   Name: string;
   Lock: number;

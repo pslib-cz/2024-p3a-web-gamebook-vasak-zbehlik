@@ -42,6 +42,22 @@ namespace skibidi_gamebook.Server.Controllers
             return connection;
         }
 
+        // GET: api/Connections/From/{fromId}
+        [HttpGet("From/{fromId}")]
+        public async Task<ActionResult<IEnumerable<Connection>>> GetConnectionsByFromId(int fromId)
+        {
+            var connections = await _context.Connections
+                .Where(c => c.FromId == fromId)
+                .ToListAsync();
+
+            if (connections == null || connections.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(connections);
+        }
+
         // PUT: api/Connections/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
