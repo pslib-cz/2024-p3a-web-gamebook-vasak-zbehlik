@@ -10,6 +10,6 @@ namespace skibidi_gamebook.Server.Models
         public int Count { get; set; }
         public string? Description { get; set; }
         public string Img { get; set; }
-
+        public int Location { get; set; } //in what room you can find it
     }
 }

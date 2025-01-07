@@ -42,6 +42,20 @@ namespace skibidi_gamebook.Server.Controllers
             return item;
         }
 
+        // GET: api/Items/location/{locationId}
+        [HttpGet("location/{locationId}")]
+        public async Task<ActionResult<IEnumerable<Item>>> GetItemsByLocation(int locationId)
+        {
+            var items = await _context.Items.Where(i => i.Location == locationId).ToListAsync();
+
+            if (items == null || !items.Any())
+            {
+                return NotFound();
+            }
+
+            return items;
+        }
+
         // PUT: api/Items/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
