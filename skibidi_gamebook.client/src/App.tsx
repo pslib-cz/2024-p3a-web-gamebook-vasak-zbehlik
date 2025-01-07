@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import ConnectionChanger from './Components/ConnectionChanger';
+import {
+  useNavigate
+} from "react-router-dom";
 //import RoomDisplay from './Components/RoomDisplay';
 
 interface Room {
@@ -25,6 +28,7 @@ const App: React.FC = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [connections, setConnections] = useState<Connection[]>([]);
   const [roomId, setRoomId] = useState<number>(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -37,11 +41,12 @@ const App: React.FC = () => {
             const jsonData2 = await response2.json();
             console.log(jsonData2);
             setConnections(jsonData2);
+          navigate(`/Rooms/${jsonData.rId}`);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     })();
-  }, [roomId]);
+  }, [roomId, navigate]);
 
 
   return (
