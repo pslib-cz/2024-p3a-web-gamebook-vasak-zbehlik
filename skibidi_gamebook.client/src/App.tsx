@@ -35,31 +35,48 @@ const App: React.FC = () => {
         try {
             const response = await fetch(`https://localhost:7160/api/Rooms/${roomId}`);
             const jsonData = await response.json();
-            console.log(jsonData);
             setRoom(jsonData);
            const response2 = await fetch(`https://localhost:7160/api/Connections/From/${roomId}`);
             const jsonData2 = await response2.json();
-            console.log(jsonData2);
             setConnections(jsonData2);
           navigate(`/Rooms/${jsonData.rId}`);
+          console.log(jsonData);
+          console.log(jsonData2);
+          console.log('Background Image URL:', `https://localhost:7160/Images/${room?.img}`);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     })();
+
   }, [roomId, navigate]);
 
 
   return (
-    <div className="App">
-      <h1>Room List</h1>
-      <img src={`https://localhost:7160/Images/${room ? room.img : "x"}`} alt="" />
-      {connections.map((connection) => (
-        <ConnectionChanger
-          key={connection.cId}
-          onChangeRoom={(newRoomId: number) => setRoomId(newRoomId)}
-          targetRoomId={connection.roomId}
-        />
-      ))}</div>
+    
+    <div>
+      {room && (
+        <div
+          className="App"
+          style={{
+            backgroundImage: `url(https://localhost:7160/Images/${room.img})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            height: '100vh',
+            color: 'white',
+            backgroundColor: 'lightblue',
+            padding: '20px'
+          }}
+        >
+          {connections.map((connection) => (
+            <ConnectionChanger
+              key={connection.cId}
+              onChangeRoom={(newRoomId: number) => setRoomId(newRoomId)}
+              targetRoomId={connection.roomId}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
