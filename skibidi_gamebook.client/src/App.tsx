@@ -12,6 +12,9 @@ interface Room {
   name: string;
   description: string;
   img?: string;
+  charName?: string;
+  charImg?: string;
+  chartext?: string;
 }
 
 interface Connection {
@@ -42,7 +45,9 @@ const App: React.FC = () => {
           navigate(`/Rooms/${jsonData.rId}`);
           console.log(jsonData);
           console.log(jsonData2);
-          console.log('Background Image URL:', `https://localhost:7160/Images/${room?.img}`);
+          console.log('Background Image URL:', `https://localhost:7160/Images/bg/${room?.img}`);
+          console.log('character Image URL:', `https://localhost:7160/Images/char/${room?.img}`);
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -58,7 +63,7 @@ const App: React.FC = () => {
         <div
           className="App"
           style={{
-            backgroundImage: `url(https://localhost:7160/Images/${room.img})`,
+            backgroundImage: `url(https://localhost:7160/Images/bg/${room.img})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '100vh',
@@ -67,6 +72,17 @@ const App: React.FC = () => {
             padding: '20px'
           }}
         >
+          <h1>{room.name}</h1>
+          <p>{room.description}</p>
+
+          {room.charName && room.charImg && room.chartext && (
+          <div>
+            <h2>{room.charName}</h2>
+            <img src={`https://localhost:7160/Images/char/${room.charImg}`} alt={room.charName} />
+            <p>{room.chartext}</p>
+          </div>
+        )}
+
           {connections.map((connection) => (
             <ConnectionChanger
               key={connection.cId}
@@ -75,8 +91,13 @@ const App: React.FC = () => {
             />
           ))}
         </div>
+
       )}
     </div>
+
+
+      
+
   );
 };
 
