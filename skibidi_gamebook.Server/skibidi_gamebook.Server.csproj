@@ -31,6 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Images\char\" />
+    <Folder Include="Images\item\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

@@ -113,6 +113,7 @@ const App: React.FC = () => {
               key={connection.cId}
               onChangeRoom={(newRoomId: number) => setRoomId(newRoomId)}
               targetRoomId={connection.roomId}
+              name={connection.name}
             />
           ))}
         </div>

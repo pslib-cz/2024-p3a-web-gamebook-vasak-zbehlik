@@ -21,6 +21,7 @@ interface Room {
 interface ConnectionChangerProps {
   targetRoomId: number;
   onChangeRoom: (roomId: number) => void;
+  name: string;
 }
 
 const ConnectionChanger: React.FC<ConnectionChangerProps> = (props) => {
@@ -33,7 +34,7 @@ const ConnectionChanger: React.FC<ConnectionChangerProps> = (props) => {
   return (
     <div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button onClick={handleChangeRoom}>Change Room</button>
+      <button onClick={handleChangeRoom}>{(props.name)}</button>
     </div>
   );
 };
