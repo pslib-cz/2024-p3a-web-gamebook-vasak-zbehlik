@@ -25,6 +25,8 @@ app.UseCors(x => x.AllowAnyMethod().SetIsOriginAllowed(origin => new Uri(origin)
 
 app.UseDefaultFiles();
 
+
+//zmìnit pomocí endpointu
 app.UseStaticFiles(new StaticFileOptions {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
     RequestPath = "/Images"
