@@ -42,26 +42,12 @@ namespace skibidi_gamebook.Server.Controllers
             return item;
         }
 
-        // GET: api/Items/location/{locationId}
-        [HttpGet("location/{locationId}")]
-        public async Task<ActionResult<IEnumerable<Item>>> GetItemsByLocation(int locationId)
-        {
-            var items = await _context.Items.Where(i => i.Location == locationId).ToListAsync();
-
-            if (items == null || !items.Any())
-            {
-                return NotFound();
-            }
-
-            return items;
-        }
-
         // PUT: api/Items/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutItem(int id, Item item)
         {
-            if (id != item.IId)
+            if (id != item.ItemId)
             {
                 return BadRequest();
             }
@@ -93,9 +79,23 @@ namespace skibidi_gamebook.Server.Controllers
         public async Task<ActionResult<Item>> PostItem(Item item)
         {
             _context.Items.Add(item);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ItemExists(item.ItemId))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetItem", new { id = item.IId }, item);
+            return CreatedAtAction("GetItem", new { id = item.ItemId }, item);
         }
 
         // DELETE: api/Items/5
@@ -116,7 +116,7 @@ namespace skibidi_gamebook.Server.Controllers
 
         private bool ItemExists(int id)
         {
-            return _context.Items.Any(e => e.IId == id);
+            return _context.Items.Any(e => e.ItemId == id);
         }
     }
 }

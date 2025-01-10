@@ -47,7 +47,7 @@ namespace skibidi_gamebook.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoom(int id, Room room)
         {
-            if (id != room.RId)
+            if (id != room.RoomId)
             {
                 return BadRequest();
             }
@@ -79,9 +79,23 @@ namespace skibidi_gamebook.Server.Controllers
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
             _context.Rooms.Add(room);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (RoomExists(room.RoomId))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetRoom", new { id = room.RId }, room);
+            return CreatedAtAction("GetRoom", new { id = room.RoomId }, room);
         }
 
         // DELETE: api/Rooms/5
@@ -102,7 +116,7 @@ namespace skibidi_gamebook.Server.Controllers
 
         private bool RoomExists(int id)
         {
-            return _context.Rooms.Any(e => e.RId == id);
+            return _context.Rooms.Any(e => e.RoomId == id);
         }
     }
 }

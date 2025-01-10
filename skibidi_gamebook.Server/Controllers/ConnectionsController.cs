@@ -42,28 +42,12 @@ namespace skibidi_gamebook.Server.Controllers
             return connection;
         }
 
-        // GET: api/Connections/From/{fromId}
-        [HttpGet("From/{fromId}")]
-        public async Task<ActionResult<IEnumerable<Connection>>> GetConnectionsByFromId(int fromId)
-        {
-            var connections = await _context.Connections
-                .Where(c => c.FromId == fromId)
-                .ToListAsync();
-
-            if (connections == null || connections.Count == 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(connections);
-        }
-
         // PUT: api/Connections/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutConnection(int id, Connection connection)
         {
-            if (id != connection.CId)
+            if (id != connection.ConnectionId)
             {
                 return BadRequest();
             }
@@ -97,7 +81,7 @@ namespace skibidi_gamebook.Server.Controllers
             _context.Connections.Add(connection);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetConnection", new { id = connection.CId }, connection);
+            return CreatedAtAction("GetConnection", new { id = connection.ConnectionId }, connection);
         }
 
         // DELETE: api/Connections/5
@@ -118,7 +102,7 @@ namespace skibidi_gamebook.Server.Controllers
 
         private bool ConnectionExists(int id)
         {
-            return _context.Connections.Any(e => e.CId == id);
+            return _context.Connections.Any(e => e.ConnectionId == id);
         }
     }
 }

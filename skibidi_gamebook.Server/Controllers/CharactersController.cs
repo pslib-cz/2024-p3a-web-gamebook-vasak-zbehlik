@@ -12,47 +12,47 @@ namespace skibidi_gamebook.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AchivementsController : ControllerBase
+    public class CharactersController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public AchivementsController(AppDbContext context)
+        public CharactersController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Achivements
+        // GET: api/Characters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Achivement>>> GetAchivements()
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
-            return await _context.Achivements.ToListAsync();
+            return await _context.Characters.ToListAsync();
         }
 
-        // GET: api/Achivements/5
+        // GET: api/Characters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Achivement>> GetAchivement(int id)
+        public async Task<ActionResult<Character>> GetCharacter(int id)
         {
-            var achivement = await _context.Achivements.FindAsync(id);
+            var character = await _context.Characters.FindAsync(id);
 
-            if (achivement == null)
+            if (character == null)
             {
                 return NotFound();
             }
 
-            return achivement;
+            return character;
         }
 
-        // PUT: api/Achivements/5
+        // PUT: api/Characters/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAchivement(int id, Achivement achivement)
+        public async Task<IActionResult> PutCharacter(int id, Character character)
         {
-            if (id != achivement.AId)
+            if (id != character.CharacterId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(achivement).State = EntityState.Modified;
+            _context.Entry(character).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace skibidi_gamebook.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AchivementExists(id))
+                if (!CharacterExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace skibidi_gamebook.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Achivements
+        // POST: api/Characters
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Achivement>> PostAchivement(Achivement achivement)
+        public async Task<ActionResult<Character>> PostCharacter(Character character)
         {
-            _context.Achivements.Add(achivement);
+            _context.Characters.Add(character);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAchivement", new { id = achivement.AId }, achivement);
+            return CreatedAtAction("GetCharacter", new { id = character.CharacterId }, character);
         }
 
-        // DELETE: api/Achivements/5
+        // DELETE: api/Characters/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAchivement(int id)
+        public async Task<IActionResult> DeleteCharacter(int id)
         {
-            var achivement = await _context.Achivements.FindAsync(id);
-            if (achivement == null)
+            var character = await _context.Characters.FindAsync(id);
+            if (character == null)
             {
                 return NotFound();
             }
 
-            _context.Achivements.Remove(achivement);
+            _context.Characters.Remove(character);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AchivementExists(int id)
+        private bool CharacterExists(int id)
         {
-            return _context.Achivements.Any(e => e.AId == id);
+            return _context.Characters.Any(e => e.CharacterId == id);
         }
     }
 }
