@@ -42,6 +42,21 @@ namespace skibidi_gamebook.Server.Controllers
             return character;
         }
 
+        // GET: api/Characters/where/{whereId}
+        [HttpGet("where/{whereId}")]
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersByWhereId(int whereId)
+        {
+            var characters = await _context.Characters.Where(c => c.whereId == whereId).ToListAsync();
+
+            if (characters == null || !characters.Any())
+            {
+                return NotFound();
+            }
+
+            return characters;
+        }
+
+
         // PUT: api/Characters/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
