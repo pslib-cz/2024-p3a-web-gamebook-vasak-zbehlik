@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using skibidi_gamebook.Server.Data;
 
@@ -10,9 +11,11 @@ using skibidi_gamebook.Server.Data;
 namespace skibidi_gamebook.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250112171911_qqwertzu")]
+    partial class qqwertzu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
@@ -39,9 +42,6 @@ namespace skibidi_gamebook.Server.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("CharacterId");
-
-                    b.HasIndex("whereId")
-                        .IsUnique();
 
                     b.ToTable("Characters");
                 });
@@ -72,9 +72,6 @@ namespace skibidi_gamebook.Server.Migrations
 
                     b.HasIndex("FromId");
 
-                    b.HasIndex("RequieremenId")
-                        .IsUnique();
-
                     b.HasIndex("ToId")
                         .IsUnique();
 
@@ -84,7 +81,6 @@ namespace skibidi_gamebook.Server.Migrations
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Item", b =>
                 {
                     b.Property<int>("ItemId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -111,7 +107,6 @@ namespace skibidi_gamebook.Server.Migrations
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Room", b =>
                 {
                     b.Property<int>("RoomId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -130,24 +125,11 @@ namespace skibidi_gamebook.Server.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("skibidi_gamebook.Server.Models.Character", b =>
-                {
-                    b.HasOne("skibidi_gamebook.Server.Models.Room", "where")
-                        .WithOne("Character")
-                        .HasForeignKey("skibidi_gamebook.Server.Models.Character", "whereId");
-
-                    b.Navigation("where");
-                });
-
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Connection", b =>
                 {
                     b.HasOne("skibidi_gamebook.Server.Models.Room", "From")
                         .WithMany("Connections")
                         .HasForeignKey("FromId");
-
-                    b.HasOne("skibidi_gamebook.Server.Models.Item", "Requierement")
-                        .WithOne("Connection")
-                        .HasForeignKey("skibidi_gamebook.Server.Models.Connection", "RequieremenId");
 
                     b.HasOne("skibidi_gamebook.Server.Models.Room", "To")
                         .WithOne("Connection")
@@ -155,29 +137,49 @@ namespace skibidi_gamebook.Server.Migrations
 
                     b.Navigation("From");
 
-                    b.Navigation("Requierement");
-
                     b.Navigation("To");
                 });
 
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Item", b =>
                 {
+                    b.HasOne("skibidi_gamebook.Server.Models.Connection", "Connection")
+                        .WithOne("Requierement")
+                        .HasForeignKey("skibidi_gamebook.Server.Models.Item", "ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("skibidi_gamebook.Server.Models.Room", "Rooms")
                         .WithMany("Items")
                         .HasForeignKey("RoomId");
 
-                    b.Navigation("Rooms");
-                });
-
-            modelBuilder.Entity("skibidi_gamebook.Server.Models.Item", b =>
-                {
                     b.Navigation("Connection");
+
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Room", b =>
                 {
-                    b.Navigation("Character");
+                    b.HasOne("skibidi_gamebook.Server.Models.Character", "Character")
+                        .WithOne("where")
+                        .HasForeignKey("skibidi_gamebook.Server.Models.Room", "RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
+                    b.Navigation("Character");
+                });
+
+            modelBuilder.Entity("skibidi_gamebook.Server.Models.Character", b =>
+                {
+                    b.Navigation("where");
+                });
+
+            modelBuilder.Entity("skibidi_gamebook.Server.Models.Connection", b =>
+                {
+                    b.Navigation("Requierement");
+                });
+
+            modelBuilder.Entity("skibidi_gamebook.Server.Models.Room", b =>
+                {
                     b.Navigation("Connection");
 
                     b.Navigation("Connections");

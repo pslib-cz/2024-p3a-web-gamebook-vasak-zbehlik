@@ -18,9 +18,7 @@ namespace skibidi_gamebook.Server.Models
         public ICollection<Connection>? Connections { get; set; } // kam se da jit z tohoto roomu
         public ICollection<Item>? Items { get; set; }
         
-        [ForeignKey("ToId")]
         public Connection? Connection { get; set; } //co nas dovede do tohoto roomu 
-        [ForeignKey("Room")]
         public Character? Character { get; set; }
 
     }

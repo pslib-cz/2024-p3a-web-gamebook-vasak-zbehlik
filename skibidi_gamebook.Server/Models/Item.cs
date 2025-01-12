@@ -15,7 +15,6 @@ namespace skibidi_gamebook.Server.Models
         [JsonIgnore]
         public Room? Rooms { get; set; }
 
-        [ForeignKey("RequierementId")]
         public Connection? Connection { get; set; } //where it is used
 
     }

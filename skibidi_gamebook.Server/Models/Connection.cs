@@ -11,7 +11,7 @@ namespace skibidi_gamebook.Server.Models
 
         public string Name {  get; set; }  //co bude v buttonu
         public int Lock { get; set; }
-        public int? RequierementId { get; set; }      //item needed to unlock
+        public int? RequieremenId { get; set; }      //item needed to unlock
         [JsonIgnore]
         public Item? Requierement { get; set; }       // item needded to unlock
 

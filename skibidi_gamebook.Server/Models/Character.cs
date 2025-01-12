@@ -12,6 +12,7 @@ namespace skibidi_gamebook.Server.Models
         public string Text { get; set; }
         public string img {  get; set; }
         public int? whereId { get; set; }
+        [JsonIgnore]
         public Room? where { get; set; }
     }
 }

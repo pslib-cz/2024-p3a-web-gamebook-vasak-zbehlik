@@ -31,15 +31,15 @@ namespace skibidi_gamebook.Server.Data
                 .WithOne(b => b.Rooms)
                 .HasForeignKey(b => b.RoomId);
 
-            modelBuilder.Entity<Connection>()
-                .HasOne(l => l.Requierement)
-                .WithOne(b => b.Connection)
-                .HasForeignKey<Item>(b => b.ItemId);
+            modelBuilder.Entity<Item>()
+                .HasOne(l => l.Connection)
+                .WithOne(b => b.Requierement)
+                .HasForeignKey<Connection>(b => b.RequieremenId);
 
-            modelBuilder.Entity<Character>()
-                .HasOne(l => l.where)
-                .WithOne(b => b.Character)
-                .HasForeignKey<Room>(b => b.RoomId);
+            modelBuilder.Entity<Room>()
+                .HasOne(l => l.Character)
+                .WithOne(b => b.where)
+                .HasForeignKey<Character>(b => b.whereId);
         }
    }
 }
