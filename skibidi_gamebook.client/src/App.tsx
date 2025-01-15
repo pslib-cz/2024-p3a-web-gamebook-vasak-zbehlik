@@ -1,40 +1,12 @@
-// App.tsx
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import ConnectionChanger from './Components/ConnectionChanger';
-import {
-  useNavigate
-} from "react-router-dom";
-//import RoomDisplay from './Components/RoomDisplay';
+import ConnectionList from './components/ConnectionList';
+import RoomDetails from './components/RoomDetails';
+import CharacterDetails from './components/CharacterDetails';
+import ItemList from './components/ItemList';
+import { Room, Connection, Item } from './types';
+import { useNavigate } from "react-router-dom";
 
-interface Room {
-  rId: number;
-  name: string;
-  description: string;
-  img?: string;
-  charName?: string;
-  charImg?: string;
-  chartext?: string;
-}
-
-interface Connection {
-  cId: number;
-  fromId: number;
-  roomId: number;
-  name: string;
-  lock: number;
-  itemId?: number;
-  achievementId?: number;
-}
-
-interface Item {
-  iId: number;
-  name: string;
-  count: number;
-  description?: string;
-  img: string;
-  locationId: number;
-}
 const App: React.FC = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [connections, setConnections] = useState<Connection[]>([]);
@@ -44,87 +16,48 @@ const App: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-        try {
-            const response = await fetch(`https://localhost:7160/api/Rooms/${roomId}`);
-            const jsonData = await response.json();
-            setRoom(jsonData);
-           const response2 = await fetch(`https://localhost:7160/api/Connections/From/${roomId}`);
-            const jsonData2 = await response2.json();
-            setConnections(jsonData2);
-            const response3 = await fetch(`https://localhost:7160/api/Items/Location/${roomId}`);
-            const jsonData3 = await response3.json();
-            setItems(jsonData3);
-          navigate(`/Rooms/${jsonData.rId}`);
-          console.log(jsonData);
-          console.log(jsonData2);
-          console.log('Background Image URL:', `https://localhost:7160/Images/bg/${room?.img}`);
-          console.log('character Image URL:', `https://localhost:7160/Images/char/${room?.img}`);
-          console.log('Item Image URL:', `https://localhost:7160/Images/item/${room?.img}`);
-        } catch (error) {
-            console.error('Error fetching data:', error);
+      try {
+        const response = await fetch(`https://localhost:7160/api/Rooms/${roomId}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch room: ${response.statusText}`);
         }
-    })();
+        const jsonData = await response.json();
+        setRoom(jsonData);
 
+        const response2 = await fetch(`https://localhost:7160/api/Connections/From/${roomId}`);
+        if (!response2.ok) {
+          throw new Error(`Failed to fetch connections: ${response2.statusText}`);
+        }
+        const jsonData2 = await response2.json();
+        setConnections(Array.isArray(jsonData2) ? jsonData2 : []);
+
+        const response3 = await fetch(`https://localhost:7160/api/Items/Location/${roomId}`);
+        if (!response3.ok) {
+          throw new Error(`Failed to fetch items: ${response3.statusText}`);
+        }
+        const jsonData3 = await response3.json();
+        setItems(jsonData3);
+
+        navigate(`/Rooms/${jsonData.rId}`);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    })();
   }, [roomId, navigate]);
 
-
   return (
-    
     <div>
       {room && (
-        <div
-          className="App"
-          style={{
-            backgroundImage: `url(https://localhost:7160/Images/bg/${room.img})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            height: '100vh',
-            color: 'white',
-            backgroundColor: 'lightblue',
-            padding: '20px'
-          }}
-        >
-          <h1>{room.name}</h1>
-          <p>{room.description}</p>
-          <div>
-
-            {room.charName && room.charImg && room.chartext && (
-            <div>
-              <h2>{room.charName}</h2>
-              <img src={`https://localhost:7160/Images/char/${room.charImg}`} alt={room.charName} />
-                <p>{room.chartext}</p>
-            </div>)}
-
-            {items.length > 0 && (
-            <div>
-              <ul>
-                {items.map((item) => (
-                  <li key={item.iId}>
-                    <img src={`https://localhost:7160/Images/item/${item.img}`} alt={item.name} />
-                    {item.name} ({item.description})
-                  </li>
-                ))}
-              </ul>
-            </div>)}
-
-          </div>
-          {connections.map((connection) => (
-            <ConnectionChanger
-              key={connection.cId}
-              onChangeRoom={(newRoomId: number) => setRoomId(newRoomId)}
-              targetRoomId={connection.roomId}
-              name={connection.name}
-            />
-          ))}
+        <div className="App">
+          <RoomDetails room={room} />
+          {room.charName && room.charImg && room.chartext && (
+            <CharacterDetails character={{ name: room.charName, img: room.charImg, text: room.chartext }} />
+          )}
+          {items.length > 0 && <ItemList items={items} />}
+          <ConnectionList connections={connections} onChangeRoom={setRoomId} />
         </div>
       )}
-      </div>
-      
-    
-
-
-      
-
+    </div>
   );
 };
 
