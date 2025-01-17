@@ -11,8 +11,8 @@ using skibidi_gamebook.Server.Data;
 namespace skibidi_gamebook.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250110221104_neser")]
-    partial class neser
+    [Migration("20250115085954_fix")]
+    partial class fix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,9 @@ namespace skibidi_gamebook.Server.Migrations
 
                     b.HasKey("CharacterId");
 
+                    b.HasIndex("whereId")
+                        .IsUnique();
+
                     b.ToTable("Characters");
                 });
 
@@ -62,7 +65,7 @@ namespace skibidi_gamebook.Server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("RequierementId")
+                    b.Property<int?>("RequieremenId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ToId")
@@ -71,6 +74,9 @@ namespace skibidi_gamebook.Server.Migrations
                     b.HasKey("ConnectionId");
 
                     b.HasIndex("FromId");
+
+                    b.HasIndex("RequieremenId")
+                        .IsUnique();
 
                     b.HasIndex("ToId")
                         .IsUnique();
@@ -81,6 +87,7 @@ namespace skibidi_gamebook.Server.Migrations
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Item", b =>
                 {
                     b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -93,9 +100,6 @@ namespace skibidi_gamebook.Server.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int?>("RequierementId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("RoomId")
                         .HasColumnType("INTEGER");
@@ -110,6 +114,7 @@ namespace skibidi_gamebook.Server.Migrations
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Room", b =>
                 {
                     b.Property<int>("RoomId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -123,15 +128,18 @@ namespace skibidi_gamebook.Server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Room")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ToId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("RoomId");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("skibidi_gamebook.Server.Models.Character", b =>
+                {
+                    b.HasOne("skibidi_gamebook.Server.Models.Room", "where")
+                        .WithOne("Character")
+                        .HasForeignKey("skibidi_gamebook.Server.Models.Character", "whereId");
+
+                    b.Navigation("where");
                 });
 
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Connection", b =>
@@ -140,55 +148,39 @@ namespace skibidi_gamebook.Server.Migrations
                         .WithMany("Connections")
                         .HasForeignKey("FromId");
 
+                    b.HasOne("skibidi_gamebook.Server.Models.Item", "Requierement")
+                        .WithOne("Connection")
+                        .HasForeignKey("skibidi_gamebook.Server.Models.Connection", "RequieremenId");
+
                     b.HasOne("skibidi_gamebook.Server.Models.Room", "To")
                         .WithOne("Connection")
                         .HasForeignKey("skibidi_gamebook.Server.Models.Connection", "ToId");
 
                     b.Navigation("From");
 
+                    b.Navigation("Requierement");
+
                     b.Navigation("To");
                 });
 
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Item", b =>
                 {
-                    b.HasOne("skibidi_gamebook.Server.Models.Connection", "Connection")
-                        .WithOne("Requierement")
-                        .HasForeignKey("skibidi_gamebook.Server.Models.Item", "ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("skibidi_gamebook.Server.Models.Room", "Rooms")
                         .WithMany("Items")
                         .HasForeignKey("RoomId");
 
-                    b.Navigation("Connection");
-
                     b.Navigation("Rooms");
                 });
 
+            modelBuilder.Entity("skibidi_gamebook.Server.Models.Item", b =>
+                {
+                    b.Navigation("Connection");
+                });
+
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Room", b =>
                 {
-                    b.HasOne("skibidi_gamebook.Server.Models.Character", "Character")
-                        .WithOne("where")
-                        .HasForeignKey("skibidi_gamebook.Server.Models.Room", "RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Character");
-                });
 
-            modelBuilder.Entity("skibidi_gamebook.Server.Models.Character", b =>
-                {
-                    b.Navigation("where");
-                });
-
-            modelBuilder.Entity("skibidi_gamebook.Server.Models.Connection", b =>
-                {
-                    b.Navigation("Requierement");
-                });
-
-            modelBuilder.Entity("skibidi_gamebook.Server.Models.Room", b =>
-                {
                     b.Navigation("Connection");
 
                     b.Navigation("Connections");

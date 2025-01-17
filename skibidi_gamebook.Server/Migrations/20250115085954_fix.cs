@@ -5,11 +5,26 @@
 namespace skibidi_gamebook.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class neser : Migration
+    public partial class fix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Rooms",
+                columns: table => new
+                {
+                    RoomId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Img = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rooms", x => x.RoomId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Characters",
                 columns: table => new
@@ -24,28 +39,32 @@ namespace skibidi_gamebook.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Characters", x => x.CharacterId);
+                    table.ForeignKey(
+                        name: "FK_Characters_Rooms_whereId",
+                        column: x => x.whereId,
+                        principalTable: "Rooms",
+                        principalColumn: "RoomId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rooms",
+                name: "Items",
                 columns: table => new
                 {
-                    RoomId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ItemId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Img = table.Column<string>(type: "TEXT", nullable: true),
-                    Room = table.Column<int>(type: "INTEGER", nullable: true),
-                    ToId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Img = table.Column<string>(type: "TEXT", nullable: false),
+                    RoomId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rooms", x => x.RoomId);
+                    table.PrimaryKey("PK_Items", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_Rooms_Characters_RoomId",
+                        name: "FK_Items_Rooms_RoomId",
                         column: x => x.RoomId,
-                        principalTable: "Characters",
-                        principalColumn: "CharacterId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Rooms",
+                        principalColumn: "RoomId");
                 });
 
             migrationBuilder.CreateTable(
@@ -56,13 +75,18 @@ namespace skibidi_gamebook.Server.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Lock = table.Column<int>(type: "INTEGER", nullable: false),
-                    RequierementId = table.Column<int>(type: "INTEGER", nullable: true),
+                    RequieremenId = table.Column<int>(type: "INTEGER", nullable: true),
                     FromId = table.Column<int>(type: "INTEGER", nullable: true),
                     ToId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Connections", x => x.ConnectionId);
+                    table.ForeignKey(
+                        name: "FK_Connections_Items_RequieremenId",
+                        column: x => x.RequieremenId,
+                        principalTable: "Items",
+                        principalColumn: "ItemId");
                     table.ForeignKey(
                         name: "FK_Connections_Rooms_FromId",
                         column: x => x.FromId,
@@ -75,43 +99,28 @@ namespace skibidi_gamebook.Server.Migrations
                         principalColumn: "RoomId");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Items",
-                columns: table => new
-                {
-                    ItemId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Img = table.Column<string>(type: "TEXT", nullable: false),
-                    RoomId = table.Column<int>(type: "INTEGER", nullable: true),
-                    RequierementId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Items", x => x.ItemId);
-                    table.ForeignKey(
-                        name: "FK_Items_Connections_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "Connections",
-                        principalColumn: "ConnectionId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Items_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
-                        principalColumn: "RoomId");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Connections_FromId",
                 table: "Connections",
                 column: "FromId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Connections_RequieremenId",
+                table: "Connections",
+                column: "RequieremenId",
+                unique: false);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Connections_ToId",
                 table: "Connections",
                 column: "ToId",
-                unique: true);
+                unique: false);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Characters_whereId",
+                table: "Characters",
+                column: "whereId",
+                unique: false);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_RoomId",
@@ -123,16 +132,16 @@ namespace skibidi_gamebook.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Items");
-
-            migrationBuilder.DropTable(
                 name: "Connections");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Characters");
 
             migrationBuilder.DropTable(
-                name: "Characters");
+                name: "Items");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
         }
     }
 }
