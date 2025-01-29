@@ -30,16 +30,30 @@ namespace skibidi_gamebook.Server.Controllers
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
+        public async Task<ActionResult> GetRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms   //přidat agr loading, join na tabulky
+                .Include(r => r.Items)
+                .Include(r => r.Connections)
+                .Include(r => r.Character)
+                .Select(r => new
+                {
+                    r.RoomId,
+                    r.Name,
+                    r.Description,
+                    r.Img,
+                    Connections = r.Connections.Select(c => new { c.ConnectionId }),
+                    Items = r.Items.Select(b => new { b.ItemId }),
+                    CharacterId = r.Character != null ? r.Character.CharacterId : (int?)null
+                })
+                .FirstOrDefaultAsync(r => r.RoomId == id);
 
             if (room == null)
             {
                 return NotFound();
             }
 
-            return room;
+            return Ok(room);
         }
 
         // PUT: api/Rooms/5

@@ -30,16 +30,27 @@ namespace skibidi_gamebook.Server.Controllers
 
         // GET: api/Items/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Item>> GetItem(int id)
+        public async Task<ActionResult> GetItem(int id)
         {
-            var item = await _context.Items.FindAsync(id);
+            var item = await _context.Items
+                .Include(i => i.Connection)
+                .Select(i => new
+                {
+                    i.ItemId,
+                    i.Name,
+                    i.Description,
+                    i.Img,
+                    ConnectionId = i.Connection != null ? i.Connection.ConnectionId : (int?)null
+                })
+                .FirstOrDefaultAsync(i => i.ItemId == id);
+
 
             if (item == null)
             {
                 return NotFound();
             }
 
-            return item;
+            return Ok(item);
         }
 
         // GET: api/Items/room/{roomId}
