@@ -139,6 +139,7 @@ namespace skibidi_gamebook.Server.Migrations
                     b.Navigation("where");
                 });
 
+
             modelBuilder.Entity("skibidi_gamebook.Server.Models.Connection", b =>
                 {
                     b.HasOne("skibidi_gamebook.Server.Models.Room", "From")

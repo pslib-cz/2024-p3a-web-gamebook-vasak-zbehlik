@@ -70,7 +70,7 @@ const App: React.FC = () => {
 
   return (
     
-    <div>
+    <>
       {room && (
         <div
           className="App"
@@ -118,7 +118,7 @@ const App: React.FC = () => {
           ))}
         </div>
       )}
-      </div>
+      </>
       
     
 

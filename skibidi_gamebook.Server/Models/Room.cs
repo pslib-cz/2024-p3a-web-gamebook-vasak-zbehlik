@@ -21,5 +21,6 @@ namespace skibidi_gamebook.Server.Models
         public Connection? Connection { get; set; } //co nas dovede do tohoto roomu 
         public Character? Character { get; set; }
 
+
     }
 }
