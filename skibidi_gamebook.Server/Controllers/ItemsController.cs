@@ -30,23 +30,34 @@ namespace skibidi_gamebook.Server.Controllers
 
         // GET: api/Items/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Item>> GetItem(int id)
+        public async Task<ActionResult> GetItem(int id)
         {
-            var item = await _context.Items.FindAsync(id);
+            var item = await _context.Items
+                .Include(i => i.Connection)
+                .Select(i => new
+                {
+                    i.ItemId,
+                    i.Name,
+                    i.Description,
+                    i.Img,
+                    ConnectionId = i.Connection != null ? i.Connection.ConnectionId : (int?)null
+                })
+                .FirstOrDefaultAsync(i => i.ItemId == id);
+
 
             if (item == null)
             {
                 return NotFound();
             }
 
-            return item;
+            return Ok(item);
         }
 
-        // GET: api/Items/location/{locationId}
-        [HttpGet("location/{locationId}")]
-        public async Task<ActionResult<IEnumerable<Item>>> GetItemsByLocation(int locationId)
+        // GET: api/Items/room/{roomId}
+        [HttpGet("room/{roomId}")]
+        public async Task<ActionResult<IEnumerable<Item>>> GetItemsByRoomId(int roomId)
         {
-            var items = await _context.Items.Where(i => i.Location == locationId).ToListAsync();
+            var items = await _context.Items.Where(i => i.RoomId == roomId).ToListAsync();
 
             if (items == null || !items.Any())
             {
@@ -61,7 +72,7 @@ namespace skibidi_gamebook.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutItem(int id, Item item)
         {
-            if (id != item.IId)
+            if (id != item.ItemId)
             {
                 return BadRequest();
             }
@@ -93,9 +104,23 @@ namespace skibidi_gamebook.Server.Controllers
         public async Task<ActionResult<Item>> PostItem(Item item)
         {
             _context.Items.Add(item);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ItemExists(item.ItemId))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetItem", new { id = item.IId }, item);
+            return CreatedAtAction("GetItem", new { id = item.ItemId }, item);
         }
 
         // DELETE: api/Items/5
@@ -116,7 +141,7 @@ namespace skibidi_gamebook.Server.Controllers
 
         private bool ItemExists(int id)
         {
-            return _context.Items.Any(e => e.IId == id);
+            return _context.Items.Any(e => e.ItemId == id);
         }
     }
 }

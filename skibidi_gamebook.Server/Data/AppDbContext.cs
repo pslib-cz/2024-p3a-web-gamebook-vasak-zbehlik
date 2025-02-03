@@ -10,36 +10,36 @@ namespace skibidi_gamebook.Server.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Connection> Connections { get; set; }
-        public DbSet<Achivement> Achivements { get; set; }
+        public DbSet<Character> Characters { get; set; } = default!;
 
-  /*      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("YourConnectionStringHere");
-        }*/
 
- /*       protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Relationships for Connection
-            modelBuilder.Entity<Connection>()
-                .HasOne(c => c.From)
-                .WithMany()
-                .HasForeignKey(c => c.FromId);
+      
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+       {
+           modelBuilder.Entity<Room>() // connections v roomu
+               .HasMany(l => l.Connections) 
+               .WithOne(b => b.From)
+               .HasForeignKey(b => b.FromId);
 
-            modelBuilder.Entity<Connection>()
-                .HasOne(c => c.To)
-                .WithMany()
-                .HasForeignKey(c => c.ToId);
+            modelBuilder.Entity<Room>() //jaka connection vede do roomu
+                 .HasOne(l => l.Connection)
+                 .WithOne(b => b.To)
+                 .HasForeignKey<Connection>(b => b.ToId);
 
-            modelBuilder.Entity<Connection>()
-                .HasOne(c => c.Requirements)
-                .WithMany()
-                .HasForeignKey(c => c.RequirementsId);
+            modelBuilder.Entity<Room>() // itemy v roomu
+                .HasMany(l => l.Items)
+                .WithOne(b => b.Rooms)
+                .HasForeignKey(b => b.RoomId);
 
-            // Relationships for Task
-            modelBuilder.Entity<Task>()
-                .HasOne(t => t.Requirements)
-                .WithMany(a => a.Tasks)
-                .HasForeignKey(t => t.RequirementsId);
-        }*/
-    }
+            modelBuilder.Entity<Item>()
+                .HasOne(l => l.Connection)
+                .WithOne(b => b.Requierement)
+                .HasForeignKey<Connection>(b => b.RequieremenId);
+
+            modelBuilder.Entity<Room>()
+                .HasOne(l => l.Character)
+                .WithOne(b => b.where)
+                .HasForeignKey<Character>(b => b.whereId);
+        }
+   }
 }

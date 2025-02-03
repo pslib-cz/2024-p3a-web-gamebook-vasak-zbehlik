@@ -30,16 +30,30 @@ namespace skibidi_gamebook.Server.Controllers
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
+        public async Task<ActionResult> GetRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms   //přidat agr loading, join na tabulky
+                .Include(r => r.Items)
+                .Include(r => r.Connections)
+                .Include(r => r.Character)
+                .Select(r => new
+                {
+                    r.RoomId,
+                    r.Name,
+                    r.Description,
+                    r.Img,
+                    Connections = r.Connections.Select(c => new { c.ConnectionId }),
+                    Items = r.Items.Select(b => new { b.ItemId }),
+                    CharacterId = r.Character != null ? r.Character.CharacterId : (int?)null
+                })
+                .FirstOrDefaultAsync(r => r.RoomId == id);
 
             if (room == null)
             {
                 return NotFound();
             }
 
-            return room;
+            return Ok(room);
         }
 
         // PUT: api/Rooms/5
@@ -47,7 +61,7 @@ namespace skibidi_gamebook.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoom(int id, Room room)
         {
-            if (id != room.RId)
+            if (id != room.RoomId)
             {
                 return BadRequest();
             }
@@ -79,9 +93,23 @@ namespace skibidi_gamebook.Server.Controllers
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
             _context.Rooms.Add(room);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (RoomExists(room.RoomId))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetRoom", new { id = room.RId }, room);
+            return CreatedAtAction("GetRoom", new { id = room.RoomId }, room);
         }
 
         // DELETE: api/Rooms/5
@@ -102,7 +130,7 @@ namespace skibidi_gamebook.Server.Controllers
 
         private bool RoomExists(int id)
         {
-            return _context.Rooms.Any(e => e.RId == id);
+            return _context.Rooms.Any(e => e.RoomId == id);
         }
     }
 }
