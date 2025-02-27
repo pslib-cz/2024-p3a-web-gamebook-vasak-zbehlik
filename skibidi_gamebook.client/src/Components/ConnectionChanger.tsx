@@ -1,40 +1,49 @@
-// ConnectionChanger.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Connection {
-  CId: number;
+  cId: number;
   fromId: number;
-  RoomId: number;
-  Name: string;
-  Lock: number;
-  ItemId?: number;
-  AchievementId?: number;
-}
-
-interface Room {
-  RId: number;
-  Name: string;
-  Description: string;
-  Img?: string;
+  roomId: number;
+  name: string;
+  lock: number;
+  itemId?: number;
+  achievementId?: number;
 }
 
 interface ConnectionChangerProps {
-  targetRoomId: number;
+  roomId: number;
   onChangeRoom: (roomId: number) => void;
-  name: string;
 }
 
 const ConnectionChanger: React.FC<ConnectionChangerProps> = (props) => {
+  const [connections, setConnections] = useState<Connection[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const handleChangeRoom = () => {
-    props.onChangeRoom(props.targetRoomId);
+  const handleChangeRoom = (targetRoomId: number) => {
+    props.onChangeRoom(targetRoomId);
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch(`https://localhost:7160/api/Connections/from/${props.roomId}`);
+        const jsonData = await response.json();
+        setConnections(jsonData);
+      } catch (error) {
+        setError('Error fetching connections');
+        console.error('Error fetching connections:', error);
+      }
+    })();
+  }, [props.roomId]);
 
   return (
     <div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button onClick={handleChangeRoom}>{(props.name)}</button>
+      {connections.map((connection) => (
+        <button key={connection.cId} onClick={() => handleChangeRoom(connection.roomId)}>
+          {connection.name}
+        </button>
+      ))}
     </div>
   );
 };
