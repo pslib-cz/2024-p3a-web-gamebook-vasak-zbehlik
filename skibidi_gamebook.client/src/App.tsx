@@ -48,10 +48,10 @@ const App: React.FC = () => {
             const response = await fetch(`https://localhost:7160/api/Rooms/${roomId}`);
             const jsonData = await response.json();
             setRoom(jsonData);
-           const response2 = await fetch(`https://localhost:7160/api/Connections/From/${roomId}`);
+           const response2 = await fetch(`https://localhost:7160/api/Connections/from/${roomId}`);
             const jsonData2 = await response2.json();
             setConnections(jsonData2);
-            const response3 = await fetch(`https://localhost:7160/api/Items/Location/${roomId}`);
+            const response3 = await fetch(`https://localhost:7160/api/Items/room/${roomId}`);
             const jsonData3 = await response3.json();
             setItems(jsonData3);
           navigate(`/Rooms/${jsonData.rId}`);
