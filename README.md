@@ -1,6 +1,5 @@
-Příběh:
-  Jste kočka která se ztratila / jí páníčci někde zapomněli.
-  Vaším prvním úkolem je zajistit si jídlo v podobě ryb.
-  Poté se pomocí cizích koček dostanete do svého sídliště / města. Samozdřejmě né všechny vám chtějí pomoci a budou vám škodit.
-  Zde vás potká vrána která vám dá informace výmněnou za třpitivé poklady.
-  Příběh končí v měkkém pelíšku vašeho domova.
+Ztracená kočka
+
+Probudíš se na chladném betonovém chodníku. Okolo se rozprostírá cizí město, plné hluku, pachů a pohybujících se stínů. Tví páníčci jsou pryč. Zapomněli tě? Nebo ses ztratila sama?
+
+Jediné, co teď víš, je, že máš hlad.
