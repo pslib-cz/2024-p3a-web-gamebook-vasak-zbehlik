@@ -41,9 +41,11 @@ const ItemDisplay: React.FC<ItemDisplayProps> = ({ roomId }) => {
   }, [roomId]);
 
   const handleItemClick = (item: Item) => {
-    const storedItems = JSON.parse(localStorage.getItem('inventory') || '[]');
-    storedItems.push(item);
-    localStorage.setItem('inventory', JSON.stringify(storedItems));
+    const storedItemIds = JSON.parse(localStorage.getItem('inventory') || '[]');
+    if (!storedItemIds.includes(item.itemId)) {
+      storedItemIds.push(item.itemId);
+      localStorage.setItem('inventory', JSON.stringify(storedItemIds));
+    }
   };
 
   return (

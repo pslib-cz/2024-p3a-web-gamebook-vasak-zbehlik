@@ -45,6 +45,7 @@ interface Room {
 const App: React.FC = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [roomId, setRoomId] = useState<number>(1);
+  const [currency, setCurrency] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,6 +70,14 @@ const App: React.FC = () => {
     setRoomId(newRoomId);
   };
 
+  const increaseCurrency = (amount: number) => {
+    setCurrency(currency + amount);
+  };
+
+  const decreaseCurrency = (amount: number) => {
+    setCurrency(currency - amount);
+  };
+
   return (
     <>
       {room && (
@@ -81,9 +90,15 @@ const App: React.FC = () => {
             height: '100vh',
             color: 'white',
             backgroundColor: 'lightblue',
-            padding: '20px'
+            padding: '20px',
+            position: 'relative'
           }}
         >
+          <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: '10px', borderRadius: '5px' }}>
+            <p>Currency: {currency}</p>
+            {/* <button onClick={() => increaseCurrency(10)}>Increase</button>
+            <button onClick={() => decreaseCurrency(10)}>Decrease</button> */}
+          </div>
           <h1>{room.name}</h1>
           <p>{room.description}</p>
           <div>
@@ -92,6 +107,7 @@ const App: React.FC = () => {
           </div>
           <ConnectionChanger
             roomId={roomId}
+            currency={currency}
             onChangeRoom={handleChangeRoom}
           />
         </div>
