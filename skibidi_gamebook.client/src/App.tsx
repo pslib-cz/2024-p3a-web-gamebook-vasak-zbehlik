@@ -4,13 +4,42 @@ import ConnectionChanger from './Components/ConnectionChanger';
 import ItemDisplay from './Components/ItemDisplay';
 import CharacterDisplay from './Components/CharacterDisplay';
 import { useNavigate } from "react-router-dom";
-import InventoryMenu from './Components/InventoryDisplay';
 
-interface Room {
-  rId: number;
+interface Connection {
+  connectionId: number;
+  name: string;
+  lock: number;
+  requieremenId: number;
+  fromId: number;
+  toId: number;
+}
+
+interface Item {
+  itemId: number;
   name: string;
   description: string;
-  img?: string;
+  img: string;
+  roomId: number;
+  connection: Connection;
+}
+
+interface Character {
+  characterId: number;
+  name: string;
+  text: string;
+  img: string;
+  whereId: number;
+}
+
+interface Room {
+  roomId: number;
+  name: string;
+  description: string;
+  img: string;
+  connections: Connection[];
+  items: Item[];
+  connection: Connection;
+  character: Character;
 }
 
 const App: React.FC = () => {
@@ -22,14 +51,23 @@ const App: React.FC = () => {
     (async () => {
       try {
         const response = await fetch(`https://localhost:7160/api/Rooms/${roomId}`);
-        const jsonData = await response.json();
-        setRoom(jsonData);
-        navigate(`/Rooms/${jsonData.rId}`);
+        const text = await response.text();
+        if (text) {
+          const jsonData = JSON.parse(text);
+          setRoom(jsonData);
+          navigate(`/Rooms/${jsonData.roomId}`);
+        } else {
+          console.error('Empty response');
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     })();
   }, [roomId, navigate]);
+
+  const handleChangeRoom = (newRoomId: number) => {
+    setRoomId(newRoomId);
+  };
 
   return (
     <>
@@ -54,7 +92,7 @@ const App: React.FC = () => {
           </div>
           <ConnectionChanger
             roomId={roomId}
-            onChangeRoom={(newRoomId: number) => setRoomId(newRoomId)}
+            onChangeRoom={handleChangeRoom}
           />
         </div>
       )}

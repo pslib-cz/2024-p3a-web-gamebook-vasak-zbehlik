@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 interface Character {
-  charName: string;
-  charImg: string;
-  chartext: string;
+  characterId: number;
+  name: string;
+  text: string;
+  img: string;
+  whereId: number;
 }
 
 interface CharacterDisplayProps {
@@ -17,12 +19,11 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId }) => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`https://localhost:7160/api/Characters/room/${roomId}`);
+        const response = await fetch(`/api/Characters/where/${roomId}`);
         const jsonData = await response.json();
         setCharacter(jsonData);
       } catch (error) {
         setError('Error fetching character');
-        console.error('Error fetching character:', error);
       }
     })();
   }, [roomId]);
@@ -32,9 +33,9 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId }) => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {character && (
         <div>
-          <h2>{character.charName}</h2>
-          <img src={`https://localhost:7160/Images/char/${character.charImg}`} alt={character.charName} />
-          <p>{character.chartext}</p>
+          <h2>{character.name}</h2>
+          <img src={`https://localhost:7160/Images/char/${character.img}`} alt={character.name} />
+          <p>{character.text}</p>
         </div>
       )}
     </div>

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 interface Connection {
-  cId: number;
-  fromId: number;
-  roomId: number;
+  connectionId: number;
   name: string;
   lock: number;
-  itemId?: number;
-  achievementId?: number;
+  requieremenId: number;
+  fromId: number;
+  toId: number;
 }
 
 interface ConnectionChangerProps {
@@ -40,7 +39,7 @@ const ConnectionChanger: React.FC<ConnectionChangerProps> = (props) => {
     <div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {connections.map((connection) => (
-        <button key={connection.cId} onClick={() => handleChangeRoom(connection.roomId)}>
+        <button key={connection.connectionId} onClick={() => handleChangeRoom(connection.toId)}>
           {connection.name}
         </button>
       ))}
