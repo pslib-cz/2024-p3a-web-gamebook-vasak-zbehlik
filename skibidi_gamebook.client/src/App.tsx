@@ -3,6 +3,7 @@ import './App.css';
 import ConnectionChanger from './Components/ConnectionChanger';
 import ItemDisplay from './Components/ItemDisplay';
 import CharacterDisplay from './Components/CharacterDisplay';
+import InventoryMenu from './Components/InventoryMenu';
 import { useNavigate } from "react-router-dom";
 
 interface Connection {
@@ -94,22 +95,27 @@ const App: React.FC = () => {
             position: 'relative'
           }}
         >
-          <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: '10px', borderRadius: '5px' }}>
-            <p>Currency: {currency}</p>
-            {/* <button onClick={() => increaseCurrency(10)}>Increase</button>
-            <button onClick={() => decreaseCurrency(10)}>Decrease</button> */}
+          <InventoryMenu />
+          <div className="currency-display">
+            {currency}
           </div>
-          <h1>{room.name}</h1>
-          <p>{room.description}</p>
-          <div>
+          <div className="room-info">
+            <h1>{room.name}</h1>
+            <p>{room.description}</p>
+          </div>
+          <div className="character-display">
             <CharacterDisplay roomId={roomId} />
+          </div>
+          <div className="item-display">
             <ItemDisplay roomId={roomId} />
           </div>
-          <ConnectionChanger
-            roomId={roomId}
-            currency={currency}
-            onChangeRoom={handleChangeRoom}
-          />
+          <div className="connection-buttons">
+            <ConnectionChanger
+              roomId={roomId}
+              currency={currency}
+              onChangeRoom={handleChangeRoom}
+            />
+          </div>
         </div>
       )}
     </>

@@ -1,16 +1,109 @@
-﻿
-
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-.App {
-    width: 100vw;
-    height: 100vh;
+﻿body, html {
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc; /* Light brown background */
+  }
+  
+  .App {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #4b4b4b; /* Greyish text color */
+  }
+  
+  button {
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8b4513; /* SaddleBrown button color */
+    color: white;
+    font-size: 16px;
+  }
+  
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #5a2d0c; /* Darker brown on hover */
+  }
+  
+  .inventory-menu {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    max-width: 300px;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .inventory-menu button {
+    background-color: gray;
+    color: white;
+  }
+  
+  .currency-display {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+  }
+  
+  .room-info {
+    margin-top: 20px;
+    width: 40%;
+  }
+  
+  .room-info h1 {
+    margin: 0;
+    font-size: 36px;
+  }
+  
+  .room-info p {
+    font-size: 18px;
+  }
+  
+  .character-display, .item-display {
+    display: inline-block;
+    width: 45%;
+    margin-top: 20px;
+  }
+  
+  .character-display img, .item-display img {
+    max-width: 100px;
+    border-radius: 5px;
+  }
+  
+  .character-display ul, .item-display ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .character-display li, .item-display li {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  
+  .connection-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .connection-buttons button {
+    margin: 0 10px;
   }

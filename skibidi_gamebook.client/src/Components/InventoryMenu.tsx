@@ -33,12 +33,12 @@ const InventoryMenu: React.FC = () => {
   };
 
   return (
-    <div style={{ position: 'fixed', top: 0, right: 0 }}>
-      <button onClick={toggleMenu} style={{ padding: '10px', backgroundColor: 'gray', color: 'white' }}>
+    <div className="inventory-menu">
+      <button onClick={toggleMenu}>
         ☰
       </button>
       {isOpen && (
-        <div style={{ backgroundColor: 'white', color: 'black', padding: '10px', border: '1px solid black' }}>
+        <div>
           <h3>Inventory</h3>
           <ul>
             {inventory.map((item) => (
