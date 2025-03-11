@@ -3,6 +3,7 @@ import './App.css';
 import ConnectionChanger from './Components/ConnectionChanger';
 import ItemDisplay from './Components/ItemDisplay';
 import CharacterDisplay from './Components/CharacterDisplay';
+import InventoryMenu from './Components/InventoryMenu';
 import { useNavigate } from "react-router-dom";
 
 interface Connection {
@@ -45,6 +46,7 @@ interface Room {
 const App: React.FC = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [roomId, setRoomId] = useState<number>(1);
+  const [currency, setCurrency] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,6 +71,14 @@ const App: React.FC = () => {
     setRoomId(newRoomId);
   };
 
+  const increaseCurrency = (amount: number) => {
+    setCurrency(currency + amount);
+  };
+
+  const decreaseCurrency = (amount: number) => {
+    setCurrency(currency - amount);
+  };
+
   return (
     <>
       {room && (
@@ -81,19 +91,31 @@ const App: React.FC = () => {
             height: '100vh',
             color: 'white',
             backgroundColor: 'lightblue',
-            padding: '20px'
+            padding: '20px',
+            position: 'relative'
           }}
         >
-          <h1>{room.name}</h1>
-          <p>{room.description}</p>
-          <div>
+          <InventoryMenu />
+          <div className="currency-display">
+            {currency}
+          </div>
+          <div className="room-info">
+            <h1>{room.name}</h1>
+            <p>{room.description}</p>
+          </div>
+          <div className="character-display">
             <CharacterDisplay roomId={roomId} />
+          </div>
+          <div className="item-display">
             <ItemDisplay roomId={roomId} />
           </div>
-          <ConnectionChanger
-            roomId={roomId}
-            onChangeRoom={handleChangeRoom}
-          />
+          <div className="connection-buttons">
+            <ConnectionChanger
+              roomId={roomId}
+              currency={currency}
+              onChangeRoom={handleChangeRoom}
+            />
+          </div>
         </div>
       )}
     </>

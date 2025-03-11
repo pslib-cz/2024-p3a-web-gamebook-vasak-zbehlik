@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 interface Item {
-  iId: number;
+  itemId: number;
   name: string;
-  count: number;
-  description?: string;
+  description: string;
   img: string;
-  locationId: number;
+  roomId: number;
+  connection: Connection;
 }
 
 const InventoryMenu: React.FC = () => {
@@ -14,8 +14,18 @@ const InventoryMenu: React.FC = () => {
   const [inventory, setInventory] = useState<Item[]>([]);
 
   useEffect(() => {
-    const storedItems = JSON.parse(localStorage.getItem('inventory') || '[]');
-    setInventory(storedItems);
+    const fetchItems = async () => {
+      const storedItemIds = JSON.parse(localStorage.getItem('inventory') || '[]');
+      const items = await Promise.all(
+        storedItemIds.map(async (itemId: number) => {
+          const response = await fetch(`https://localhost:7160/api/Items/${itemId}`);
+          return response.json();
+        })
+      );
+      setInventory(items);
+    };
+
+    fetchItems();
   }, []);
 
   const toggleMenu = () => {
@@ -23,16 +33,16 @@ const InventoryMenu: React.FC = () => {
   };
 
   return (
-    <div style={{ position: 'fixed', top: 0, right: 0 }}>
-      <button onClick={toggleMenu} style={{ padding: '10px', backgroundColor: 'gray', color: 'white' }}>
+    <div className="inventory-menu">
+      <button onClick={toggleMenu}>
         ☰
       </button>
       {isOpen && (
-        <div style={{ backgroundColor: 'white', color: 'black', padding: '10px', border: '1px solid black' }}>
+        <div>
           <h3>Inventory</h3>
           <ul>
             {inventory.map((item) => (
-              <li key={item.iId}>
+              <li key={item.itemId}>
                 <img src={`https://localhost:7160/Images/item/${item.img}`} alt={item.name} />
                 {item.name} ({item.description})
               </li>
