@@ -71,13 +71,30 @@ const App: React.FC = () => {
     setRoomId(newRoomId);
   };
 
-  const increaseCurrency = (amount: number) => {
-    setCurrency(currency + amount);
-  };
-
-  const decreaseCurrency = (amount: number) => {
-    setCurrency(currency - amount);
-  };
+  const updateCurrency = (characterId: number) => {
+    if (characterId % 8 === 0) {
+      setCurrency(currency + 1);
+    } else if (characterId % 8 === 1) {
+      setCurrency(currency - 1);
+    } else if (characterId % 8 === 2) {
+      setCurrency(currency + 3);
+    }
+    else if (characterId % 8 === 3) {
+      setCurrency(currency - 3);
+    }
+    else if (characterId % 8 === 4) {
+      setCurrency(currency + 5);
+    }
+    else if (characterId % 8 === 5) {
+      setCurrency(currency - 5);
+    }
+    else if (characterId % 8 === 6) {
+      setCurrency(currency + 10);
+    }
+    else if (characterId % 8 === 7) {
+      setCurrency(currency - 10);
+    }
+  }
 
   return (
     <>
@@ -104,10 +121,12 @@ const App: React.FC = () => {
             <p>{room.description}</p>
           </div>
           <div className="character-display">
-            <CharacterDisplay roomId={roomId} />
+            {room?.character && (
+            <CharacterDisplay roomId={roomId} updateCurrency={updateCurrency}/>)}
           </div>
           <div className="item-display">
-            <ItemDisplay roomId={roomId} />
+            {room?.items && room.items.length > 0 && (
+            <ItemDisplay roomId={roomId} />)}
           </div>
           <div className="connection-buttons">
             <ConnectionChanger

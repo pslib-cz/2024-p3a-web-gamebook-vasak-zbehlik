@@ -6,7 +6,7 @@ interface Item {
   description: string;
   img: string;
   roomId: number;
-  connection: Connection;
+  connection: number;
 }
 
 const InventoryMenu: React.FC = () => {
@@ -25,8 +25,10 @@ const InventoryMenu: React.FC = () => {
       setInventory(items);
     };
 
+    if (isOpen){
     fetchItems();
-  }, []);
+  }
+  }, [isOpen]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
