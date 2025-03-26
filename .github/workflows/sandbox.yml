@@ -19,7 +19,7 @@ jobs:
       - name: Sestavení a nahrání kontejnerového obrazu
         uses: docker/build-push-action@v6
         with:
-          context: ./skibidi_gamebook.sln
+          context: skibidi_gamebook.sln
           file: ./Dockerfile # změň cestu podle toho, kde se nachází Dockerfile
           push: true
           tags: registry.pslib.cloud/sandbox/app-62:latest
