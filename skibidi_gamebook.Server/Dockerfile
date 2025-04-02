@@ -19,11 +19,11 @@ COPY ["skibidi_gamebook.client/skibidi_gamebook.client.esproj", "skibidi_gameboo
 COPY ["skibidi_gamebook.client/nuget.config", "skibidi_gamebook.client/"]
 RUN dotnet restore "skibidi_gamebook.Server/skibidi_gamebook.Server.csproj"
 COPY . .
-RUN dotnet build "skibidi_gamebook.Server.csproj" -c $configuration -o /app/build
+RUN dotnet build "skibidi_gamebook.Server/skibidi_gamebook.Server.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
 ARG configuration=Release
-RUN dotnet publish "skibidi_gamebook.Server.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "skibidi_gamebook.Server/skibidi_gamebook.Server.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
