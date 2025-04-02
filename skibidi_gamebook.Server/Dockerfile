@@ -6,7 +6,7 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 
-
+RUN mkdir -p /app/Images
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
