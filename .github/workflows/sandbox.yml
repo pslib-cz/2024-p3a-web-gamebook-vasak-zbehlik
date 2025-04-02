@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: .skibidi_gamebook.Server/Dockerfile
+          file: ./skibidi_gamebook.Server/Dockerfile
           push: true
           tags: registry.pslib.cloud/sandbox/app-62:latest
           cache-from: type=gha
