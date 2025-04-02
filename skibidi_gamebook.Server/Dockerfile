@@ -14,9 +14,9 @@ RUN apt update && apt install nodejs npm -y
 RUN mkdir -p ~/.aspnet/https
 WORKDIR /src
 
+ARG configuration=Release
 COPY ["skibidi_gamebook.Server/skibidi_gamebook.Server.csproj", "skibidi_gamebook.Server/"]
 COPY ["skibidi_gamebook.client/skibidi_gamebook.client.esproj", "skibidi_gamebook.client/"]
-COPY ["skibidi_gamebook.client/nuget.config", "skibidi_gamebook.client/"]
 RUN dotnet restore "skibidi_gamebook.Server/skibidi_gamebook.Server.csproj"
 COPY . .
 RUN dotnet build "skibidi_gamebook.Server/skibidi_gamebook.Server.csproj" -c $configuration -o /app/build
