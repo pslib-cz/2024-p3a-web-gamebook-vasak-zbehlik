@@ -12,9 +12,9 @@ RUN mkdir -p /app/Images
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-RUN sudo apt-get update && sudo apt-get install -y curl && \
+RUN apt-get update && apt-get install -y curl && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    sudo apt-get install -y nodejs
+    apt-get install -y nodejs
 RUN mkdir -p ~/.aspnet/https
 WORKDIR /src
 
