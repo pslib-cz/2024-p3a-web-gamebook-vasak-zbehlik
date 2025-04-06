@@ -6,6 +6,7 @@ services:
   skibidigamebookserver:
     image: skibidigamebookserver
     build:
+
       context: .
       dockerfile: skibidi_gamebook.Server/Dockerfile
     ports:

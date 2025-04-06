@@ -6,6 +6,7 @@ import CharacterDisplay from './Components/CharacterDisplay';
 import InventoryMenu from './Components/InventoryMenu';
 import { useNavigate } from "react-router-dom";
 
+const ServerUrl = '62.pslib.cloud'
 interface Connection {
   connectionId: number;
   name: string;
@@ -102,7 +103,7 @@ const App: React.FC = () => {
         <div
           className="App"
           style={{
-            backgroundImage: `url(https://localhost:7160/Images/bg/${room.img})`,
+            backgroundImage: `url(https://localhost:7160/wwwroot/Images/bg/${room.img})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '100vh',

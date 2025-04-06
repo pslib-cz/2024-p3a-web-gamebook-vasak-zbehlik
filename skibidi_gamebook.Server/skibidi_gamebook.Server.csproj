@@ -31,9 +31,54 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\char\" />
-    <Folder Include="Images\item\" />
+    <Folder Include="wwwroot\Images\char\" />
+    <Folder Include="wwwroot\Images\item\" />
     <Folder Include="Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\bg\arch.jpg" />
+    <None Include="wwwroot\Images\bg\bench.jpg" />
+    <None Include="wwwroot\Images\bg\Bez.jpg" />
+    <None Include="wwwroot\Images\bg\BreadStall.jpeg" />
+    <None Include="wwwroot\Images\bg\BreakRoom.jpeg" />
+    <None Include="wwwroot\Images\bg\bush.jpg" />
+    <None Include="wwwroot\Images\bg\CentralHub.jpeg" />
+    <None Include="wwwroot\Images\bg\Clockworker.jpeg" />
+    <None Include="wwwroot\Images\bg\ClothingStore.jpeg" />
+    <None Include="wwwroot\Images\bg\Crow.jpeg" />
+    <None Include="wwwroot\Images\bg\Elevator.jpeg" />
+    <None Include="wwwroot\Images\bg\Escalators.jpeg" />
+    <None Include="wwwroot\Images\bg\Fish.jpeg" />
+    <None Include="wwwroot\Images\bg\FoodCourt.jpeg" />
+    <None Include="wwwroot\Images\bg\fountain.jpg" />
+    <None Include="wwwroot\Images\bg\gate.jpg" />
+    <None Include="wwwroot\Images\bg\HallGate.jpeg" />
+    <None Include="wwwroot\Images\bg\HallReception.jpeg" />
+    <None Include="wwwroot\Images\bg\HardwareStore.jpeg" />
+    <None Include="wwwroot\Images\bg\InfoDesk.jpeg" />
+    <None Include="wwwroot\Images\bg\IronBridge.jpeg" />
+    <None Include="wwwroot\Images\bg\Jewelry.jpeg" />
+    <None Include="wwwroot\Images\bg\JunctionHall.jpeg" />
+    <None Include="wwwroot\Images\bg\lamp.jpg" />
+    <None Include="wwwroot\Images\bg\Lounge.jpeg" />
+    <None Include="wwwroot\Images\bg\MayorOffice.jpeg" />
+    <None Include="wwwroot\Images\bg\OldChapel.jpeg" />
+    <None Include="wwwroot\Images\bg\PersonnelDoor.jpeg" />
+    <None Include="wwwroot\Images\bg\Petstore.jpeg" />
+    <None Include="wwwroot\Images\bg\PortraitHall.jpeg" />
+    <None Include="wwwroot\Images\bg\recycle_bins.jpg" />
+    <None Include="wwwroot\Images\bg\stairs.jpeg" />
+    <None Include="wwwroot\Images\bg\statue.jpg" />
+    <None Include="wwwroot\Images\bg\Studio.jpeg" />
+    <None Include="wwwroot\Images\bg\Tavern.jpeg" />
+    <None Include="wwwroot\Images\bg\Tower.jpeg" />
+    <None Include="wwwroot\Images\bg\Toystore.jpeg" />
+    <None Include="wwwroot\Images\bg\trashcans.jpeg" />
+    <None Include="wwwroot\Images\bg\trash_can.jpg" />
+    <None Include="wwwroot\Images\bg\tree.jpg" />
+    <None Include="wwwroot\Images\bg\Vault.jpeg" />
+    <None Include="wwwroot\Images\bg\Well.jpeg" />
   </ItemGroup>
 
 </Project>
