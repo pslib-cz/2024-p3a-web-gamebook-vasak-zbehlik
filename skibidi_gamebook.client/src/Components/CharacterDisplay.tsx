@@ -25,7 +25,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
         const jsonData = await response.json();
         setCharacter(jsonData);
         updateCurrency(jsonData.characterId);
-      } catch (error) {
+      } catch {
         setError('Error fetching character');
       }
     })();
@@ -45,7 +45,7 @@ const handleCharacterClick = () => {
       {character && (
         <div onClick={handleCharacterClick} style={{ cursor: isLocked ? 'not-allowed' : 'pointer' }}>
           <h2>{character.name}</h2>
-          <img src={`https://localhost:7160/Images/char/${character.img}`} alt={character.name}             style={{ opacity: isLocked ? 0.5 : 1 }} // Dim the character if locked
+          <img src={`/Images/char/${character.img}`} alt={character.name}             style={{ opacity: isLocked ? 0.5 : 1 }} // Dim the character if locked
           />
           <p>{character.text}</p>
         </div>

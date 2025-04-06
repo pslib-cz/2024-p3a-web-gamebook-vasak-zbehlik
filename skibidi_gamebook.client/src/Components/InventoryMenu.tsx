@@ -45,7 +45,7 @@ const InventoryMenu: React.FC = () => {
           <ul>
             {inventory.map((item) => (
               <li key={item.itemId}>
-                <img src={`https://localhost:7160/Images/item/${item.img}`} alt={item.name} />
+                <img src={`/Images/item/${item.img}`} alt={item.name} />
                 {item.name} ({item.description})
               </li>
             ))}
