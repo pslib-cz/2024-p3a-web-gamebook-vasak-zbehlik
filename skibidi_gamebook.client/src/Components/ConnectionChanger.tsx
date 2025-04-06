@@ -26,7 +26,7 @@ const ConnectionChanger: React.FC<ConnectionChangerProps> = (props) => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`https://localhost:7160/api/Connections/from/${props.roomId}`);
+        const response = await fetch(`/api/Connections/from/${props.roomId}`);
         const jsonData = await response.json();
         setConnections(jsonData);
       } catch (error) {

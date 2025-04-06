@@ -18,7 +18,7 @@ const InventoryMenu: React.FC = () => {
       const storedItemIds = JSON.parse(localStorage.getItem('inventory') || '[]');
       const items = await Promise.all(
         storedItemIds.map(async (itemId: number) => {
-          const response = await fetch(`https://localhost:7160/api/Items/${itemId}`);
+          const response = await fetch(`/api/Items/${itemId}`);
           return response.json();
         })
       );

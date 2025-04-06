@@ -53,7 +53,7 @@ const App: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`https://localhost:7160/api/Rooms/${roomId}`);
+        const response = await fetch(`/api/Rooms/${roomId}`);
         const text = await response.text();
         if (text) {
           const jsonData = JSON.parse(text);
@@ -103,7 +103,7 @@ const App: React.FC = () => {
         <div
           className="App"
           style={{
-            backgroundImage: `url(https://localhost:7160/wwwroot/Images/bg/${room.img})`,
+            backgroundImage: `url(/Images/bg/${room.img})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '100vh',

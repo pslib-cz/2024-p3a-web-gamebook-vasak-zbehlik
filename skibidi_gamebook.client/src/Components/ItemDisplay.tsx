@@ -30,7 +30,7 @@ const ItemDisplay: React.FC<ItemDisplayProps> = ({ roomId }) => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`https://localhost:7160/api/Items/room/${roomId}`);
+        const response = await fetch(`/api/Items/room/${roomId}`);
         const jsonData = await response.json();
         setItems(jsonData);
       } catch (error) {
@@ -56,7 +56,7 @@ const ItemDisplay: React.FC<ItemDisplayProps> = ({ roomId }) => {
           <ul>
             {items.map((item) => (
               <li key={item.itemId} onClick={() => handleItemClick(item)}>
-                <img src={`https://localhost:7160/Images/item/${item.img}`} alt={item.name} />
+                <img src={`/Images/item/${item.img}`} alt={item.name} />
                 {item.name} ({item.description})
               </li>
             ))}
