@@ -22,6 +22,6 @@ jobs:
           context: .
           file: ./skibidi_gamebook.Server/Dockerfile
           push: true
-          tags: registry.pslib.cloud/sandbox/app-62:latest
+          tags: registry.pslib.cloud/sandbox/app-94:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
