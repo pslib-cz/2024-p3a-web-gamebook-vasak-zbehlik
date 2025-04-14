@@ -18,7 +18,7 @@
     cursor: pointer;
     padding: 10px 20px;
     margin: 5px;
-    border: none;
+    border: 2px  1  black;
     border-radius: 5px;
     background-color: #8b4513; /* SaddleBrown button color */
     color: white;
@@ -71,10 +71,18 @@
   .room-info h1 {
     margin: 0;
     font-size: 36px;
+    background-color: antiquewhite;
+    padding: 10px;
+    border-radius: 5px;
+    text-shadow: 2px 2px 4px #000000;
   }
   
   .room-info p {
     font-size: 18px;
+    color: #000000;
+    background-color: rgba(250, 235, 215, 0.603);
+    padding: 10px;
+    border-radius: 5px;
   }
   
   .character-display, .item-display {

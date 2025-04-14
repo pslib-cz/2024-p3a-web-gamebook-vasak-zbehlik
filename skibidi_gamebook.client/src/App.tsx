@@ -6,7 +6,6 @@ import CharacterDisplay from './Components/CharacterDisplay';
 import InventoryMenu from './Components/InventoryMenu';
 import { useNavigate } from "react-router-dom";
 
-const ServerUrl = '62.pslib.cloud'
 interface Connection {
   connectionId: number;
   name: string;
