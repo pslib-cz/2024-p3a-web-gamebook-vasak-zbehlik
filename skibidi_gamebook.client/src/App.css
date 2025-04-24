@@ -1,117 +1,147 @@
 ﻿body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5dc; /* Light brown background */
-  }
-  
-  .App {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #4b4b4b; /* Greyish text color */
-  }
-  
-  button {
-    cursor: pointer;
-    padding: 10px 20px;
-    margin: 5px;
-    border: 2px  1  black;
-    border-radius: 5px;
-    background-color: #8b4513; /* SaddleBrown button color */
-    color: white;
-    font-size: 16px;
-  }
-  
-  button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  button:hover:not(:disabled) {
-    background-color: #5a2d0c; /* Darker brown on hover */
-  }
-  
-  .inventory-menu {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background-color: white;
-    color: black;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
-    max-width: 300px;
-    max-height: 100vh;
-    overflow-y: auto;
-  }
-  
-  .inventory-menu button {
-    background-color: gray;
-    color: white;
-  }
-  
-  .currency-display {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 5px;
-    color: white;
-  }
-  
-  .room-info {
-    margin-top: 20px;
-    width: 40%;
-  }
-  
-  .room-info h1 {
-    margin: 0;
-    font-size: 36px;
-    background-color: antiquewhite;
-    padding: 10px;
-    border-radius: 5px;
-    text-shadow: 2px 2px 4px #000000;
-  }
-  
-  .room-info p {
-    font-size: 18px;
-    color: #000000;
-    background-color: rgba(250, 235, 215, 0.603);
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .character-display, .item-display {
-    display: inline-block;
-    width: 45%;
-    margin-top: 20px;
-  }
-  
-  .character-display img, .item-display img {
-    max-width: 100px;
-    border-radius: 5px;
-  }
-  
-  .character-display ul, .item-display ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .character-display li, .item-display li {
-    margin: 10px 0;
-    cursor: pointer;
-  }
-  
-  .connection-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .connection-buttons button {
-    margin: 0 10px;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: url('./shop.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #4b4b4b; /* Default text color */
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #4b4b4b;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Slight white overlay for readability */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 5px;
+  border: 2px solid #8b4513;
+  border-radius: 5px;
+  background-color: #d2691e; /* Chocolate button color */
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #a0522d; /* Darker chocolate on hover */
+  transform: scale(1.05);
+}
+
+.inventory-menu {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: black;
+  padding: 10px;
+  border: 2px solid #8b4513;
+  border-radius: 5px;
+  max-width: 300px;
+  max-height: 100vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.inventory-menu button {
+  background-color: #8b4513;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.currency-display {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.room-info {
+  margin-top: 20px;
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.room-info h1 {
+  margin: 0;
+  font-size: 36px;
+  background-color: #f5deb3; /* Wheat background */
+  padding: 10px;
+  border-radius: 5px;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.room-info p {
+  font-size: 18px;
+  color: #000000;
+  background-color: rgba(250, 235, 215, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.character-display, .item-display {
+  display: inline-block;
+  width: 45%;
+  margin-top: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.character-display img, .item-display img {
+  max-width: 100px;
+  border-radius: 5px;
+  border: 2px solid #8b4513;
+}
+
+.character-display ul, .item-display ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.character-display li, .item-display li {
+  margin: 10px 0;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.character-display li:hover, .item-display li:hover {
+  background-color: #f5deb3; /* Wheat hover effect */
+}
+
+.connection-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.connection-buttons button {
+  margin: 0 10px;
+}
