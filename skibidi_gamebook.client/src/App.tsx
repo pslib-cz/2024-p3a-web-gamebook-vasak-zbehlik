@@ -102,7 +102,14 @@ const App: React.FC = () => {
         <div
           className="App"
           style={{
-            backgroundImage: `url(/Images/bg/${room.img})`
+            backgroundImage: `url(/Images/bg/${room.img})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            height: '100vh',
+            color: 'white',
+            backgroundColor: 'lightblue',
+            padding: '20px',
+            position: 'relative'
           }}
         >
           <InventoryMenu />
