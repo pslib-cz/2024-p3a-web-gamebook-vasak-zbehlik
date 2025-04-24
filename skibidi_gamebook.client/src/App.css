@@ -18,6 +18,9 @@
   background-color: rgba(255, 255, 255, 0.8); /* Slight white overlay for readability */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+ 
+  
 }
 
 button {
@@ -116,7 +119,7 @@ button:hover:not(:disabled) {
 }
 
 .character-display img, .item-display img {
-  max-width: 100px;
+  max-width: 32px;
   border-radius: 5px;
   border: 2px solid #8b4513;
 }
@@ -148,7 +151,7 @@ button:hover:not(:disabled) {
   background: #8b4513;
   padding: 10px;
   border-radius: 2px;
-  
+
 }
 
 .connection-buttons button {
