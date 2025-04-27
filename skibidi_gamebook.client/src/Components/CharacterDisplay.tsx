@@ -26,8 +26,8 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
           throw new Error(`Failed to fetch character: ${response.statusText}`);
         }
         const jsonData = await response.json();
-        setCharacter(jsonData);
-        console.log("character ffetched");
+        await setCharacter(jsonData);
+        console.log("character fetched");
       } catch (err: any) {
         console.error(err.message);
         setError('Error fetching character');
@@ -36,7 +36,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
 
     fetchCharacter();
   }, [roomId, updateCurrency]);
-  
+
 const handleCharacterClick = () => {
   if (!isLocked && character) {
     updateCurrency(character.characterId);
