@@ -19,14 +19,19 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
   const [isLocked, setIsLocked] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log("useEffect triggered with roomId:", roomId);
+
     const fetchCharacter = async () => {
       try {
         const response = await fetch(`/api/Characters/where/${roomId}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch character: ${response.statusText}`);
         }
+        console.log("Response received:", response);
         const jsonData = await response.json();
-        await setCharacter(jsonData);
+
+        setCharacter(jsonData);
+        
         console.log("character fetched");
       } catch (err: any) {
         console.error(err.message);
