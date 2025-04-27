@@ -31,7 +31,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
         const jsonData = await response.json();
 
         setCharacter(jsonData);
-        
+
         console.log("character fetched");
       } catch (err: any) {
         console.error(err.message);
@@ -40,7 +40,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
     };
 
     fetchCharacter();
-  }, [roomId, updateCurrency]);
+  }, []);
 
 const handleCharacterClick = () => {
   if (!isLocked && character) {
