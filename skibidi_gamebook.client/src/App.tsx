@@ -121,8 +121,8 @@ const App: React.FC = () => {
             <p>{room.description}</p>
           </div>
           <div className="character-display">
-            {room?.character && (
-            <CharacterDisplay roomId={roomId} updateCurrency={updateCurrency}/>)}
+           
+            <CharacterDisplay roomId={roomId} updateCurrency={updateCurrency}/>
           </div>
           <div className="item-display">
             {room?.items && room.items.length > 0 && (
