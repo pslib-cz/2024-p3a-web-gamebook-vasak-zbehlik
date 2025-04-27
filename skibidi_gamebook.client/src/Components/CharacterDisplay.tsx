@@ -21,6 +21,8 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
   useEffect(() => {
     console.log("useEffect triggered with roomId:", roomId);
 
+    setIsLocked(false); // Reset isLocked when roomId changes
+
     const fetchCharacter = async () => {
       try {
         const response = await fetch(`/api/Characters/where/${roomId}`);
@@ -40,7 +42,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
     };
 
     fetchCharacter();
-  }, []);
+  }, [roomId]);
 
 const handleCharacterClick = () => {
   if (!isLocked && character) {
