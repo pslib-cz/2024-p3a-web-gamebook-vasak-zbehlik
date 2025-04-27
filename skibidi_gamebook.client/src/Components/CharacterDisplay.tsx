@@ -27,12 +27,12 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
         }
         const jsonData = await response.json();
 
-   /*     if (jsonData && jsonData.characterId && jsonData.name && jsonData.img) {
+        if (jsonData && jsonData.characterId && jsonData.name && jsonData.img) {
           setCharacter(jsonData);
           updateCurrency(jsonData.characterId);
         } else {
           throw new Error('Invalid character data received');
-        }*/
+        }
       } catch (err: any) {
         console.error(err.message);
         setError('Error fetching character');
@@ -41,7 +41,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
 
     fetchCharacter();
   }, [roomId, updateCurrency]);
-  
+
 const handleCharacterClick = () => {
   if (!isLocked && character) {
     updateCurrency(character.characterId);
