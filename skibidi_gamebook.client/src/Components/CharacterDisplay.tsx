@@ -33,11 +33,12 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ roomId, updateCurre
         const jsonData = await response.json();
 
         setCharacter(jsonData);
-
+        setError(null); // Clear any previous error
         console.log("character fetched");
       } catch (err: any) {
         console.error(err.message);
         setError('Error fetching character');
+        setCharacter(null); // Clear character on error
       }
     };
 
